@@ -6,10 +6,11 @@ import "./App.css";
 function App() {
   return (
     <>
-      <Router>
+      <Router basename="/MovieApp">
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route path="/movie/:id" element={<MovieDetails />} />
+          {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </Router>
     </>
