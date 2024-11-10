@@ -1,0 +1,14 @@
+.header {
+  background-color: #121212;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  color: #ff3d00;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  z-index: 100;
+}
