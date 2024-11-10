@@ -127,7 +127,7 @@ const Search = () => {
                       key={movie.id}
                     >
                       <Link
-                        className={styles.styledLink}
+                        className=""
                         to={`/movie/${movie.id}`}
                         target="blank"
                       >
