@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { generatePath, Link, useParams } from "react-router-dom";
 import axios from "axios";
 import HomePage from "../Components/HomePage";
-import styles from "./MovieDetails.module.css";
 
 const apiKey = import.meta.env.VITE_API_KEY;
 
