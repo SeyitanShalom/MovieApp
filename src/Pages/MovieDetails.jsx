@@ -76,12 +76,29 @@ const MovieDetails = () => {
       >
         {isLoading && <p>Loading...</p>}
         <div className="flex max-md:flex-wrap mb-24 gap-10 ">
-          <div className="max-md:w-full w-96 shrink-0">
+          <div className="max-md:w-full w-96 shrink-0 relative">
             <img
               className="w-full rounded-lg"
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
             />
+
+            <div className="pl-2 flex justify-start items-center gap-2 text-3xl absolute top-2 left-2 bg-gradient-to-r from-slate-400  to-transparent w-2/3 rounded-l-md">
+              {movie.production_countries.map((country) => (
+                <div
+                  key={country.iso_3166_1}
+                  // style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                >
+                  <span>
+                    {String.fromCodePoint(
+                      ...[...country.iso_3166_1.toUpperCase()].map(
+                        (char) => 127397 + char.charCodeAt()
+                      )
+                    )}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="max-md:mt-0 mt-5 max-md:text-base text-lg">
             <h1 className="font-black max-md:text-lg  text-2xl mb-4">
@@ -115,7 +132,7 @@ const MovieDetails = () => {
         {cast.length > 0 ? (
           <div className="flex flex-col">
             <h2 className="mb-5 text-lg font-bold">Cast</h2>
-            <div className="flex flex-nowrap overflow-x-auto gap-10 ">
+            <div className="flex flex-nowrap overflow-x-auto gap-10 pb-4">
               {cast.slice(0, 10).map((castMember) => (
                 <div className="w-24 shrink-0 " key={castMember.id}>
                   <img

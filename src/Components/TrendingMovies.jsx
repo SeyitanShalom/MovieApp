@@ -54,11 +54,31 @@ const TrendingMovies = () => {
                     target="blank"
                   >
                     {" "}
-                    <img
-                      className="overflow-hidden rounded-md mb-1 "
-                      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                      alt={movie.title}
-                    />
+                    <div className="relative">
+                      <img
+                        className="overflow-hidden rounded-md mb-1 "
+                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                        alt={movie.title}
+                      />
+                      {movie?.production_countries?.length > 0 ? (
+                        <div className="pl-2 flex justify-start items-center gap-2 text-3xl absolute top-2 left-2 bg-gradient-to-r from-slate-400  to-transparent w-2/3 rounded-l-md">
+                          {movie.production_countries.map((country) => (
+                            <div
+                              key={country.iso_3166_1}
+                              // style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                            >
+                              <span>
+                                {String.fromCodePoint(
+                                  ...[...country.iso_3166_1.toUpperCase()].map(
+                                    (char) => 127397 + char.charCodeAt()
+                                  )
+                                )}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      ) : null}
+                    </div>
                     <p className="text-sm mb-2 font-bold max-sm:text-xs">
                       {movie.title}
                     </p>
