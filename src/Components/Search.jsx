@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { PiCalendarDotsBold, PiStarFill } from "react-icons/pi";
 
 const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -92,7 +93,7 @@ const Search = () => {
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="container">
-        <div className="flex items-center justify-center mt-40">
+        <div className="flex items-center justify-center mt-40 mb-10">
           <input
             autoComplete="on"
             autoFocus={true}
@@ -105,54 +106,66 @@ const Search = () => {
             placeholder="Search..."
           />
         </div>
-        <div className="flex justify-center items-center flex-col my-20 p-5 ">
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : error ? (
-            <p>{error}</p>
-          ) : hasSearched && searchResults.length === 0 ? (
-            <h3>No results found.</h3>
-          ) : (
-            searchResults.length > 0 && (
-              <>
-                <h3 className="font-bold text-lg mb-4">
-                  Here's your search result for{" "}
-                  <span className="text-orange-600">{query}</span>
-                </h3>
-                <div className="grid lg:grid-cols-5  md:grid-cols-4 xl:grid-cols-7 max-md:grid-cols-3 gap-10 max-sm:gap-10">
-                  {/* Map through the movies array and render each movie */}
-                  {searchResults.map((movie) => (
-                    <div
-                      className="w-40 max-sm:w-28  rounded-3xl cursor-pointer  p-2 transition-all duration-500 hover:scale-110 hover:shadow-2xl"
-                      key={movie.id}
-                    >
-                      <Link
-                        className=""
-                        to={`/movie/${movie.id}`}
-                        target="blank"
+        {!hasSearched ? (
+          ""
+        ) : (
+          <div className="flex justify-center items-center flex-col my-20 p-5 ">
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : error ? (
+              <p>{error}</p>
+            ) : hasSearched &&
+              searchResults.length === 0 &&
+              query.trim().length > 0 ? (
+              <h3>No results found.</h3>
+            ) : (
+              searchResults.length > 0 && (
+                <>
+                  <h3 className="font-bold text-lg mb-4">
+                    Here's your search result for{" "}
+                    <span className="text-orange-600">{query}</span>
+                  </h3>
+                  <div className="grid lg:grid-cols-5  md:grid-cols-4 xl:grid-cols-7 max-md:grid-cols-3 gap-10 max-sm:gap-10">
+                    {/* Map through the movies array and render each movie */}
+                    {searchResults.map((movie) => (
+                      <div
+                        className="w-40 max-sm:w-28  rounded-3xl cursor-pointer  p-2 transition-all duration-500 hover:scale-110 hover:shadow-2xl"
+                        key={movie.id}
                       >
-                        <img
-                          className="overflow-hidden rounded-md mb-1 "
-                          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                          alt={movie.title}
-                        />
-                        <p className="text-sm mb-2 font-bold max-sm:text-xs">
-                          {movie.title}
-                        </p>
-                        <p className="text-xs text-slate-300 mb-1">
-                          Release Date: {movie.release_date}
-                        </p>
-                        <p className="text-xs font-bold text-orange-600">
-                          Rating: {movie.vote_average.toFixed(1)}
-                        </p>
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )
-          )}
-        </div>
+                        <Link
+                          className=""
+                          to={`/movie/${movie.id}`}
+                          target="blank"
+                        >
+                          <img
+                            className="overflow-hidden rounded-md mb-1 "
+                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                            alt={movie.title}
+                          />
+                          <p className="text-sm mb-2 font-bold max-sm:text-xs">
+                            {movie.title}
+                          </p>
+                          <div className="text-xs text-slate-300 mb-1 flex items-center gap-1">
+                            <p>
+                              <PiCalendarDotsBold />
+                            </p>
+                            <p>{movie.release_date}</p>
+                          </div>
+                          <div className="text-xs font-bold text-orange-600 flex items-center gap-1">
+                            <p>
+                              <PiStarFill />
+                            </p>
+                            <p>{movie.vote_average.toFixed(1)}</p>
+                          </div>
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

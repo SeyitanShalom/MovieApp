@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { generatePath, Link, useParams } from "react-router-dom";
 import axios from "axios";
 import HomePage from "../Components/HomePage";
+import { PiCalendarDotsBold, PiStarFill } from "react-icons/pi";
 
 const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -156,7 +157,10 @@ const MovieDetails = () => {
           {recMovies.length > 0 ? (
             <div className="grid grid-cols-7 max-md:grid-cols-3 gap-10">
               {recMovies.map((movie) => (
-                <div key={movie.id} className="max-md:w-28">
+                <div
+                  key={movie.id}
+                  className="w-40 max-sm:w-28  rounded-3xl cursor-pointer  p-2 transition-all duration-500 hover:scale-110 hover:shadow-2xl"
+                >
                   <Link
                     to={`/movie/${movie.id}`}
                     target="blank"
@@ -170,12 +174,18 @@ const MovieDetails = () => {
                     <h5 className="text-sm mb-2 font-bold mt-1.5">
                       {movie.title}
                     </h5>
-                    <p className="text-xs text-gray-300 ">
-                      Release Date: {movie.release_date}
-                    </p>
-                    <p className="text-orange-600 text-xs font-bold mt-1">
-                      Ratings: {movie.vote_average.toFixed(1)}
-                    </p>
+                    <div className="text-xs text-slate-300 mb-1 flex items-center gap-1">
+                      <p>
+                        <PiCalendarDotsBold />
+                      </p>
+                      <p>{movie.release_date}</p>
+                    </div>
+                    <div className="text-xs font-bold text-orange-600 flex items-center gap-1">
+                      <p>
+                        <PiStarFill />
+                      </p>
+                      <p>{movie.vote_average.toFixed(1)}</p>
+                    </div>
                   </Link>
                 </div>
               ))}

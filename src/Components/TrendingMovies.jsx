@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { PiCalendarDotsBold, PiStarFill } from "react-icons/pi";
 
 const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -30,7 +31,7 @@ const TrendingMovies = () => {
     getTrendingMovies();
   }, []);
   return (
-    <div className="flex justify-center items-center flex-col mb-20 p-5 ">
+    <div className="flex justify-center items-center flex-col  mb-20 p-5 ">
       <div className="container flex flex-col justify-center items-center">
         {isLoading ? (
           <p>Loading...</p>
@@ -82,12 +83,18 @@ const TrendingMovies = () => {
                     <p className="text-sm mb-2 font-bold max-sm:text-xs">
                       {movie.title}
                     </p>
-                    <p className="text-xs text-slate-300 mb-1">
-                      Release Date: {movie.release_date}
-                    </p>
-                    <p className="text-xs font-bold text-orange-600">
-                      Ratings: {movie.vote_average.toFixed(1)}
-                    </p>
+                    <div className="text-xs text-slate-300 mb-1 flex items-center gap-1">
+                      <p>
+                        <PiCalendarDotsBold />
+                      </p>
+                      <p>{movie.release_date}</p>
+                    </div>
+                    <div className="text-xs font-bold text-orange-600 flex items-center gap-1">
+                      <p>
+                        <PiStarFill />
+                      </p>
+                      <p>{movie.vote_average.toFixed(1)}</p>
+                    </div>
                   </Link>
                 </div>
               ))}
