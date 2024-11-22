@@ -155,7 +155,7 @@ const MovieDetails = () => {
         <div className="mt-20">
           <h2 className="text-xl font-bold mb-4">Recommended Movies</h2>
           {recMovies.length > 0 ? (
-            <div className="grid grid-cols-7 max-md:grid-cols-3 gap-10">
+            <div className="grid grid-cols-7 max-md:grid-cols-3 max-lg:grid-cols-5 gap-10">
               {recMovies.map((movie) => (
                 <div
                   key={movie.id}

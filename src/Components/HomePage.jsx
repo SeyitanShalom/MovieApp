@@ -6,7 +6,6 @@ import TrendingMovies from "./TrendingMovies";
 const HomePage = () => {
   return (
     <div>
-      <Header />
       <Search />
       <TrendingMovies />
     </div>
