@@ -1,9 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useImmer } from "use-immer";
 
-export default function Signup() {
+export default function Signup({ setAuthenticated, authenticated }) {
   const [details, setDetails] = useImmer({ name: "", email: "", password: "" });
+
+  const navigate = useNavigate();
 
   const handleNameChange = (e) => {
     setDetails((draft) => {
@@ -23,6 +25,15 @@ export default function Signup() {
       draft.password = e.target.value;
     });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // if (!name || !email || !password) return;
+    if (!authenticated) return;
+    setAuthenticated(true);
+    navigate("/homepage");
+  };
+
   return (
     <div className=" flex justify-center items-center h-screen text-black">
       <div className=" bg-blue-300 w-[500px]  p-12 rounded-xl">
@@ -30,14 +41,14 @@ export default function Signup() {
         <p className="text-center">
           Already have an account? {""}
           <Link
-            to={"/login"}
+            to={"/"}
             className="text-orange-500 font-bold hover:underline transition cursor-pointer"
           >
             Login
           </Link>
         </p>
         <form
-          action=""
+          onSubmit={handleSubmit}
           className="flex flex-col  items-center justify-center mt-5"
         >
           <label

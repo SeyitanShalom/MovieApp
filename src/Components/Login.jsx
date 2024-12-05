@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useImmer } from "use-immer";
 
-export default function Login() {
+export default function Login({ user, setUser }) {
   // const [details, setDetails] = useState({
   //   email: "",
   //   password: "",
   // });
 
   const [details, updateDetails] = useImmer({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     updateDetails((draft) => {
@@ -23,6 +24,16 @@ export default function Login() {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (details.email && details.password) {
+      setUser({ email: details.email, password: details.password });
+      navigate("/homepage");
+    } else {
+      alert("Invalid credentials");
+    }
+  };
+
   return (
     <div className=" flex justify-center items-center h-screen text-black">
       <div className=" bg-blue-300 w-[500px]  p-12 rounded-xl">
@@ -30,14 +41,14 @@ export default function Login() {
         <p className="text-center">
           Don't have an account? {""}
           <Link
-            to={"/signup"}
+            to={"/signup "}
             className="text-orange-500 font-bold hover:underline transition cursor-pointer"
           >
             Signup
           </Link>
         </p>
         <form
-          action=""
+          onSubmit={handleSubmit}
           className="flex flex-col  items-center justify-center mt-5"
         >
           <label htmlFor="email" className=" w-full text-sm font-semibold mb-3">
@@ -63,11 +74,12 @@ export default function Login() {
               className="block w-full px-3 py-2 outline-none rounded-md mt-1"
             />
           </label>
-          <input
+          <button
             type="submit"
-            value="Login"
             className="bg-orange-500 hover:bg-orange-400 transition w-full rounded-lg py-2 font-bold text-white mt-3 cursor-pointer "
-          />
+          >
+            Login
+          </button>
         </form>
       </div>
     </div>

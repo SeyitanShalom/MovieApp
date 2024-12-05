@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { PiCalendarDotsBold, PiStarFill } from "react-icons/pi";
+import {
+  PiCalendarDotsBold,
+  PiStarFill,
+  PiHeartStraightBold,
+  PiHeartStraightFill,
+} from "react-icons/pi";
+import useLocalStorage from "../Hooks/useLocalStorage";
 
 const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -9,6 +15,10 @@ const TrendingMovies = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [fav, setFav] = useState(true);
+
+  // const [favourites, setFavourites] = useLocalStorage("Favourtes", "");
 
   useEffect(() => {
     const getTrendingMovies = async () => {
@@ -44,11 +54,19 @@ const TrendingMovies = () => {
             </h1>
             <div className="grid lg:grid-cols-5  md:grid-cols-4 xl:grid-cols-7 max-md:grid-cols-3 gap-10 max-sm:gap-10 ">
               {/* Map through the movies array and render each movie */}
-              {trendingMovies.map((movie) => (
+              {trendingMovies.map((movie, id) => (
                 <div
-                  className="w-40 max-sm:w-28  rounded-3xl cursor-pointer  p-2 transition-all duration-500 hover:scale-110 hover:shadow-2xl"
+                  className="w-40 max-sm:w-28  rounded-3xl cursor-pointer  p-2 transition-all duration-500 hover:scale-110 hover:shadow-2xl  relative"
                   key={movie.id}
                 >
+                  <span
+                    onClick={(id) => {
+                      setFav((prev) => !prev);
+                    }}
+                    className="absolute left-4 top-4 z-10 text-3xl text-orange-500 "
+                  >
+                    {fav ? <PiHeartStraightFill /> : <PiHeartStraightBold />}
+                  </span>
                   <Link
                     to={`/movie/${movie.id}`}
                     style={{ color: "white", textDecoration: "none" }}
@@ -61,24 +79,6 @@ const TrendingMovies = () => {
                         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                         alt={movie.title}
                       />
-                      {movie?.production_countries?.length > 0 ? (
-                        <div className="pl-2 flex justify-start items-center gap-2 text-3xl absolute top-2 left-2 bg-gradient-to-r from-slate-400  to-transparent w-2/3 rounded-l-md">
-                          {movie.production_countries.map((country) => (
-                            <div
-                              key={country.iso_3166_1}
-                              // style={{ display: "flex", alignItems: "center", gap: "8px" }}
-                            >
-                              <span>
-                                {String.fromCodePoint(
-                                  ...[...country.iso_3166_1.toUpperCase()].map(
-                                    (char) => 127397 + char.charCodeAt()
-                                  )
-                                )}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      ) : null}
                     </div>
                     <p className="text-sm mb-2 font-bold max-sm:text-xs">
                       {movie.title}
