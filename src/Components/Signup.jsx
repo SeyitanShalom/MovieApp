@@ -35,7 +35,7 @@ export default function Signup({ setAuthenticated, authenticated }) {
   };
 
   return (
-    <div className=" flex justify-center items-center h-screen text-black">
+    <div className="container flex justify-center items-center h-screen text-black">
       <div className=" bg-blue-300 w-[500px]  p-12 rounded-xl">
         <h1 className="text-center font-black text-xl">Signup</h1>
         <p className="text-center">

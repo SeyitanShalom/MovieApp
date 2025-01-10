@@ -16,7 +16,11 @@ const TrendingMovies = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [fav, setFav] = useState(true);
+  const [favourites, setFavourites] = useState([]);
+
+  const toggleFavourites = (index) => {
+    setFavourites((prev) => prev.map((fav, i) => (i === index ? !fav : fav)));
+  };
 
   // const [favourites, setFavourites] = useLocalStorage("Favourtes", "");
 
@@ -41,8 +45,8 @@ const TrendingMovies = () => {
     getTrendingMovies();
   }, []);
   return (
-    <div className="flex justify-center items-center flex-col  mb-20 p-5 ">
-      <div className="container flex flex-col justify-center items-center">
+    <div className="  flex justify-center items-center flex-col  mb-20 ">
+      <div className=" flex flex-col justify-center items-center">
         {isLoading ? (
           <p>Loading...</p>
         ) : error ? (
@@ -52,50 +56,54 @@ const TrendingMovies = () => {
             <h1 className="text-orange-600 text-2xl font-bold mb-5 z-10">
               Trending Movies
             </h1>
-            <div className="grid lg:grid-cols-5  md:grid-cols-4 xl:grid-cols-7 max-md:grid-cols-3 gap-10 max-sm:gap-10 ">
+            <div className="grid lg:grid-cols-5  md:grid-cols-4 xl:grid-cols-7 grid-cols-3 md:gap-x-40 md:gap-y-20 gap-12 ">
               {/* Map through the movies array and render each movie */}
-              {trendingMovies.map((movie, id) => (
-                <div
-                  className="w-40 max-sm:w-28  rounded-3xl cursor-pointer  p-2 transition-all duration-500 hover:scale-110 hover:shadow-2xl  relative"
-                  key={movie.id}
-                >
-                  <span
-                    onClick={(id) => {
-                      setFav((prev) => !prev);
-                    }}
-                    className="absolute left-4 top-4 z-10 text-3xl text-orange-500 "
+              {trendingMovies.map((movie, index) => (
+                <div className="place-self-center">
+                  <div
+                    className="w-40 h-[300px] max-sm:w-32 max-sm:h-[250px]  rounded-3xl cursor-pointer  p-2 transition-all duration-500 hover:scale-110 hover:shadow-2xl  relative flex items-start justify-center"
+                    key={movie.id}
                   >
-                    {fav ? <PiHeartStraightFill /> : <PiHeartStraightBold />}
-                  </span>
-                  <Link
-                    to={`/movie/${movie.id}`}
-                    style={{ color: "white", textDecoration: "none" }}
-                    target="blank"
-                  >
-                    {" "}
-                    <div className="relative">
-                      <img
-                        className="overflow-hidden rounded-md mb-1 "
-                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                        alt={movie.title}
-                      />
-                    </div>
-                    <p className="text-sm mb-2 font-bold max-sm:text-xs">
-                      {movie.title}
-                    </p>
-                    <div className="text-xs text-slate-300 mb-1 flex items-center gap-1">
-                      <p>
-                        <PiCalendarDotsBold />
+                    <span
+                      onClick={() => toggleFavourites(index)}
+                      className="absolute left-4 top-4 z-10 text-3xl text-orange-500 "
+                    >
+                      {favourites[index] ? (
+                        <PiHeartStraightFill />
+                      ) : (
+                        <PiHeartStraightBold />
+                      )}
+                    </span>
+                    <Link
+                      to={`/movie/${movie.id}`}
+                      style={{ color: "white", textDecoration: "none" }}
+                      target="blank"
+                    >
+                      {" "}
+                      <div className="relative">
+                        <img
+                          className="overflow-hidden rounded-md mb-2 "
+                          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                          alt={movie.title}
+                        />
+                      </div>
+                      <p className="text-sm mb-2 font-bold max-sm:text-xs">
+                        {movie.title}
                       </p>
-                      <p>{movie.release_date}</p>
-                    </div>
-                    <div className="text-xs font-bold text-orange-600 flex items-center gap-1">
-                      <p>
-                        <PiStarFill />
-                      </p>
-                      <p>{movie.vote_average.toFixed(1)}</p>
-                    </div>
-                  </Link>
+                      <div className="text-xs text-slate-300 mb-1 flex items-center gap-1">
+                        <p>
+                          <PiCalendarDotsBold />
+                        </p>
+                        <p>{movie.release_date}</p>
+                      </div>
+                      <div className="text-xs font-bold text-orange-600 flex items-center gap-1">
+                        <p>
+                          <PiStarFill />
+                        </p>
+                        <p>{movie.vote_average.toFixed(1)}</p>
+                      </div>
+                    </Link>
+                  </div>
                 </div>
               ))}
             </div>

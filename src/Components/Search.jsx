@@ -91,7 +91,7 @@ const Search = () => {
   //   console.log(Data); // testing the value in the console.log()
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className=" container flex flex-col justify-center items-center">
       <div className="container">
         <div className="flex items-center justify-center mt-40 mb-10">
           <input
